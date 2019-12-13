@@ -2,7 +2,7 @@ const playerFactory = (name, symbol) => {
   const getName = () => name;
   const getSymbol = () => symbol;
   return { getName, getSymbol };
-}
+};
 
 const gameFactory = () => {
   let boardArray = [['', '', ''], ['', '', ''], ['', '', '']];
@@ -43,7 +43,11 @@ const gameFactory = () => {
     } else {
       alert(`game finished, ${player[turn].getName()} won.`);
     }
-    // TODO: play again?
+  };
+
+  const sendmessage = () => {
+    const msg = `<p>${player[turn].getName()} is your turn! </p>`;
+    document.getElementById('message').innerHTML = msg;
   };
 
   const play = (move) => {
@@ -55,19 +59,19 @@ const gameFactory = () => {
       finish('draw');
     } else {
       turn = turn === 0 ? 1 : 0;
-      sendmessage()
+      sendmessage();
     }
   };
 
   const start = () => {
     player[0] = playerFactory(document.getElementById('player1').value, 'X');
     player[1] = playerFactory(document.getElementById('player2').value, 'O');
-    document.getElementById('start').style.display = 'none'
-    document.getElementById('restart').style.display = 'block'
-    document.getElementById('board').style.display = 'block'
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('restart').style.display = 'block';
+    document.getElementById('board').style.display = 'block';
 
     renderBoard();
-    sendmessage()
+    sendmessage();
   };
 
   const restart = () => {
@@ -76,21 +80,16 @@ const gameFactory = () => {
     document.getElementById('start').style.display = 'block';
     document.getElementById('restart').style.display = 'none';
     document.getElementById('board').style.display = 'none';
-    document.getElementById("player1").value = "";
-    document.getElementById("player2").value = "";
-    document.getElementById('message').innerHTML = "";
-
-    renderBoard()
+    document.getElementById('player1').value = '';
+    document.getElementById('player2').value = '';
+    document.getElementById('message').innerHTML = '';
+    renderBoard();
   };
 
-  const sendmessage = () => {
-    let msg = `<p>${player[turn].getName()} is your turn! </p>`;
-    document.getElementById('message').innerHTML = msg
-  }
-
-  return { start, renderBoard, play, restart };
+  return {
+    start, renderBoard, play, restart,
+  };
 };
-
 
 const game = gameFactory();
 game.renderBoard();
