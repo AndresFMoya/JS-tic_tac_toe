@@ -1,5 +1,7 @@
 const gameFactory = () => {
   const boardArray = [['', '', ''], ['', '', ''], ['', '', '']];
+  let player1 = undefined;
+  let player2 = undefined;
 
   const renderBoard = () => {
     boardArray.forEach((row, rowIndex) => {
@@ -11,8 +13,20 @@ const gameFactory = () => {
       });
     });
   }
-  return { renderBoard };
+
+  const startGame = () => {
+    player1 = playerFactory(document.getElementById('player1').value, 'X');
+    player2 = playerFactory(document.getElementById('player2').value, 'O');
+  }
+
+  return { renderBoard, startGame };
 };
+
+const playerFactory = (name, symbol) => {
+  const getName = () => name;
+  const getSymbol = () => symbol;
+  return { getName, getSymbol };
+}
 
 const game = gameFactory();
 game.renderBoard();
