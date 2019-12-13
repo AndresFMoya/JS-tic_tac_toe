@@ -18,47 +18,53 @@ const gameFactory = () => {
           .innerHTML = cellValue;
       });
     });
-  }
+  };
 
-  const isGameFinished = () => {
+  const isWinner = () => {
+    let finished = false;
     ['00-01-02', '10-11-12', '20-21-22',
       '00-10-20', '01-11-21', '02-12-22',
       '00-11-22', '20-11-02'].forEach((move) => {
-        let line = move.split("-")
-        if (boardArray[line[0][0]][line[0][1]]=== boardArray[line[1][0]][line[1][1]] &&
-            boardArray[line[1][0]][line[1][1]]=== boardArray[line[2][0]][line[2][1]]) {
-          return true
+      const line = move.split('-');
+      if (boardArray[line[0][0]][line[0][1]] === boardArray[line[1][0]][line[1][1]]
+        && boardArray[line[1][0]][line[1][1]] === boardArray[line[2][0]][line[2][1]]
+        && boardArray[line[0][0]][line[0][1]] !== '') {
+        finished = true;
       }
     });
-    return false
-  }
+    return finished;
+  };
+
+  const isDraw = () => !boardArray.some(l => l.includes(''));
+
+  const finish = (type) => {
+    if (type === 'draw') {
+      alert('game finished, its a draw');
+    } else {
+      alert(`game finished, ${player[turn].getName()} won.`);
+    }
+    // TODO: play again?
+  };
 
   const play = (move) => {
-    console.log('play')
     boardArray[move[0]][move[1]] = player[turn].getSymbol();
-    turn = turn === 0 ? 1 : 0;
     renderBoard();
-    isGameFinished();
-    isGameDraw();
-  }
-
-  const isGameDraw = () => {
-    if (boardArray.includes("")) {
-      return false
+    if (isWinner()) {
+      finish('win');
+    } else if (isDraw()) {
+      finish('draw');
+    } else {
+      turn = turn === 0 ? 1 : 0;
     }
-    else {
-      alert ("It's a draw")
-      return true
-    }
-  }
+  };
 
-  const startGame = () => {
+  const start = () => {
     player[0] = playerFactory(document.getElementById('player1').value, 'X');
     player[1] = playerFactory(document.getElementById('player2').value, 'O');
     renderBoard();
-  }
+  };
 
-  return { startGame, renderBoard, play };
+  return { start, renderBoard, play };
 };
 
 
