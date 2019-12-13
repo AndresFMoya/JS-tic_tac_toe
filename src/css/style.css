@@ -6,3 +6,12 @@
     margin: 4px;
 
 }
+
+#restart {
+    display: none;
+}
+
+#board {
+    display:none;
+}
+

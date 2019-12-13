@@ -5,7 +5,7 @@ const playerFactory = (name, symbol) => {
 }
 
 const gameFactory = () => {
-  const boardArray = [['', '', ''], ['', '', ''], ['', '', '']];
+  let boardArray = [['', '', ''], ['', '', ''], ['', '', '']];
   const player = [];
   let turn = 0;
 
@@ -55,28 +55,46 @@ const gameFactory = () => {
       finish('draw');
     } else {
       turn = turn === 0 ? 1 : 0;
+      sendmessage()
     }
   };
 
   const start = () => {
     player[0] = playerFactory(document.getElementById('player1').value, 'X');
     player[1] = playerFactory(document.getElementById('player2').value, 'O');
+    document.getElementById('start').style.display = 'none'
+    document.getElementById('restart').style.display = 'block'
+    document.getElementById('board').style.display = 'block'
+
     renderBoard();
+    sendmessage()
   };
 
-  return { start, renderBoard, play };
+  const restart = () => {
+    boardArray = [['', '', ''], ['', '', ''], ['', '', '']];
+    turn = 0;
+    document.getElementById('start').style.display = 'block';
+    document.getElementById('restart').style.display = 'none';
+    document.getElementById('board').style.display = 'none';
+    document.getElementById("player1").value = "";
+    document.getElementById("player2").value = "";
+    document.getElementById('message').innerHTML = "";
+
+    renderBoard()
+  };
+
+  const sendmessage = () => {
+    let msg = `<p>${player[turn].getName()} is your turn! </p>`;
+    document.getElementById('message').innerHTML = msg
+  }
+
+  return { start, renderBoard, play, restart };
 };
 
 
 const game = gameFactory();
 game.renderBoard();
-// console.log(game.boardArray)
 
-// TODO: At first show only player names input and button to start game
 // TODO: Show the board and the turn player "Player X turn"
-// TODO: make the cells on the board clickable
-// TODO: have a game.play(player, cell) method
-// TODO: method to check if game is over (row, cols, diagonal or draw)
-// TODO: game.finish method "Congratulations Player X you win" + play again button > Player names
 // TODO: game.reset (private)
 // TODO: style the board + row + col + diagonal visual
