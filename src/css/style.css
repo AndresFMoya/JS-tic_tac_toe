@@ -1,0 +1,8 @@
+.board-cell {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    background-color: red;
+    margin: 4px;
+
+}
