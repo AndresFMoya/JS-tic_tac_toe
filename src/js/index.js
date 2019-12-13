@@ -23,9 +23,14 @@ const gameFactory = () => {
   const isGameFinished = () => {
     ['00-01-02', '10-11-12', '20-21-22',
       '00-10-20', '01-11-21', '02-12-22',
-      '00-11-22', '20-11-02'].forEach((winningPosition) => {
-      
+      '00-11-22', '20-11-02'].forEach((move) => {
+        let line = move.split("-")
+        if (boardArray[line[0][0]][line[0][1]]=== boardArray[line[1][0]][line[1][1]] &&
+            boardArray[line[1][0]][line[1][1]]=== boardArray[line[2][0]][line[2][1]]) {
+          return true
+      }
     });
+    return false
   }
 
   const play = (move) => {
@@ -33,6 +38,18 @@ const gameFactory = () => {
     boardArray[move[0]][move[1]] = player[turn].getSymbol();
     turn = turn === 0 ? 1 : 0;
     renderBoard();
+    isGameFinished();
+    isGameDraw();
+  }
+
+  const isGameDraw = () => {
+    if (boardArray.includes("")) {
+      return false
+    }
+    else {
+      alert ("It's a draw")
+      return true
+    }
   }
 
   const startGame = () => {
