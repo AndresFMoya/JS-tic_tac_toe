@@ -15,25 +15,25 @@
 <div class="form-container">
   Player 1: <input type="text" name="Player1" id="player1" /><br />
   Player 2: <input type="text" name="Player2" id="player2" /><br />
-  <button class="btn" id="start" onclick="game.start()">Start Game</button>
-  <button class="btn" id="restart" onclick="game.restart()">Restart Game</button>
+  <button class="btn btn-primary" id="start" onclick="game.start()">Start Game</button>
+  <button class="btn btn-primary" id="restart" onclick="game.restart()">Restart Game</button>
 </div>
 
 <div id="message"></div>
 
 <div class="container">
   <div id="board">
-    <div class="board-row">
+    <div class="row board-row">
       <div class="board-cell" onClick="game.play('00')"> </div>
       <div class="board-cell" onClick="game.play('01')"> </div>
       <div class="board-cell" onClick="game.play('02')"> </div>
     </div>
-    <div class="board-row">
+    <div class="row board-row">
       <div class="board-cell" onClick="game.play('10')"> </div>
       <div class="board-cell" onClick="game.play('11')"> </div>
       <div class="board-cell" onClick="game.play('12')"> </div>
     </div>
-    <div class="board-row">
+    <div class="row board-row">
       <div class="board-cell" onClick="game.play('20')"> </div>
       <div class="board-cell" onClick="game.play('21')"> </div>
       <div class="board-cell" onClick="game.play('22')"> </div>

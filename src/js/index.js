@@ -20,6 +20,10 @@ const gameFactory = () => {
     });
   };
 
+  const sendMessage = (msg) => {
+    document.getElementById('message').innerHTML = `<p>${msg}</p>`;
+  };
+
   const isWinner = () => {
     let finished = false;
     ['00-01-02', '10-11-12', '20-21-22',
@@ -35,19 +39,15 @@ const gameFactory = () => {
     return finished;
   };
 
-  const isDraw = () => !boardArray.some(l => l.includes(''));
+  const isDraw = () => !boardArray.some(line => line.includes(''));
 
   const finish = (type) => {
     if (type === 'draw') {
-      alert('game finished, its a draw');
+      sendMessage('Game finished, its a draw!');
     } else {
-      alert(`game finished, ${player[turn].getName()} won.`);
+      sendMessage(`Game finished, ${player[turn].getName()} won.`);
+      document.getElementById('board').style.display = 'none';
     }
-  };
-
-  const sendmessage = () => {
-    const msg = `<p>${player[turn].getName()} is your turn! </p>`;
-    document.getElementById('message').innerHTML = msg;
   };
 
   const play = (move) => {
@@ -59,7 +59,7 @@ const gameFactory = () => {
       finish('draw');
     } else {
       turn = turn === 0 ? 1 : 0;
-      sendmessage();
+      sendMessage(`${player[turn].getName()} is your turn!`);
     }
   };
 
@@ -71,7 +71,7 @@ const gameFactory = () => {
     document.getElementById('board').style.display = 'block';
 
     renderBoard();
-    sendmessage();
+    sendMessage(`${player[turn].getName()} is your turn!`);
   };
 
   const restart = () => {
