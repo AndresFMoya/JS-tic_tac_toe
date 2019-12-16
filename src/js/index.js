@@ -27,9 +27,10 @@ const gameFactory = () => {
 
   const isWinner = () => {
     let finished = false;
-    ['00-01-02', '10-11-12', '20-21-22',
-      '00-10-20', '01-11-21', '02-12-22',
-      '00-11-22', '20-11-02'].forEach((move) => {
+    const h = ['00-01-02', '10-11-12', '20-21-22']; // horizontalWinningCombinations
+    const v = ['00-10-20', '01-11-21', '02-12-22']; // verticalWinningCombinations
+    const d = ['00-11-22', '20-11-02']; // diagonalWinningCombinations
+    [...h, ...v, ...d].forEach((move) => {
       const line = move.split('-');
       if (boardArray[line[0][0]][line[0][1]] === boardArray[line[1][0]][line[1][1]]
         && boardArray[line[1][0]][line[1][1]] === boardArray[line[2][0]][line[2][1]]
@@ -42,7 +43,7 @@ const gameFactory = () => {
 
   const isDraw = () => !boardArray.some(line => line.includes(''));
 
-  const finish = (type) => {
+  const finish = type => {
     status = 'pending';
     if (type === 'draw') {
       sendMessage('Game finished, its a draw!');
@@ -51,8 +52,8 @@ const gameFactory = () => {
     }
   };
 
-  const play = (move) => {
-    if (status !== 'running') return sendMessage(`Start the game first!`);
+  const play = move => {
+    if (status !== 'running') sendMessage('Start the game first!');
 
     boardArray[move[0]][move[1]] = player[turn].getSymbol();
     renderBoard();
@@ -71,16 +72,16 @@ const gameFactory = () => {
     player[0] = playerFactory(document.getElementById('player1').value, 'X');
     player[1] = playerFactory(document.getElementById('player2').value, 'O');
 
-    if(!player[0].getName() || !player[1].getName()) {
-      return sendMessage('Both player names must be filled!');
+    if (!player[0].getName() || !player[1].getName()) {
+      sendMessage('Both player names must be filled!');
+    } else {
+      document.getElementById('start').style.display = 'none';
+      document.getElementById('restart').style.display = 'block';
+      document.getElementById('board').style.display = 'block';
+
+      renderBoard();
+      sendMessage(`${player[turn].getName()} is your turn!`);
     }
-
-    document.getElementById('start').style.display = 'none';
-    document.getElementById('restart').style.display = 'block';
-    document.getElementById('board').style.display = 'block';
-
-    renderBoard();
-    sendMessage(`${player[turn].getName()} is your turn!`);
   };
 
   const restart = () => {
