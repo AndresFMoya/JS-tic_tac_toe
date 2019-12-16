@@ -1,0 +1,24 @@
+.board-row {
+    width: 240px;
+}
+
+.board-cell {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    margin: 4px;
+    border: 1px solid silver;
+    padding-top: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 34px;
+}
+
+#restart {
+    display: none;
+}
+
+#board {
+    display:none;
+}
+

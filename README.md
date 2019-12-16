@@ -1,6 +1,6 @@
 # README 
 # Project: Microverse | The Odin Project | JS | 02 | tic-tac-toe
-This project consist of making a tic-tac-toe game that can be played in browse.
+This project consist of making a tic-tac-toe game that can be played on the browser.
 
 ### Technology
 
