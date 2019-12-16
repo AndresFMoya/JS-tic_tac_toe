@@ -53,17 +53,19 @@ const gameFactory = () => {
   };
 
   const play = move => {
-    if (status !== 'running') sendMessage('Start the game first!');
-
-    boardArray[move[0]][move[1]] = player[turn].getSymbol();
-    renderBoard();
-    if (isWinner()) {
-      finish('win');
-    } else if (isDraw()) {
-      finish('draw');
-    } else {
-      turn = turn === 0 ? 1 : 0;
-      sendMessage(`${player[turn].getName()} is your turn!`);
+    if (status !== 'running') {
+      sendMessage('Start the game first!');
+    } else if (boardArray[move[0]][move[1]] === '') {
+      boardArray[move[0]][move[1]] = player[turn].getSymbol();
+      renderBoard();
+      if (isWinner()) {
+        finish('win');
+      } else if (isDraw()) {
+        finish('draw');
+      } else {
+        turn = turn === 0 ? 1 : 0;
+        sendMessage(`${player[turn].getName()} is your turn!`);
+      }
     }
   };
 
