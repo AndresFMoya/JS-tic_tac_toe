@@ -8,6 +8,7 @@ const gameFactory = () => {
   let boardArray = [['', '', ''], ['', '', ''], ['', '', '']];
   const player = [];
   let turn = 0;
+  let status = 'pending';
 
   const renderBoard = () => {
     boardArray.forEach((row, rowIndex) => {
@@ -42,15 +43,17 @@ const gameFactory = () => {
   const isDraw = () => !boardArray.some(line => line.includes(''));
 
   const finish = (type) => {
+    status = 'pending';
     if (type === 'draw') {
       sendMessage('Game finished, its a draw!');
     } else {
       sendMessage(`Game finished, ${player[turn].getName()} won.`);
-      document.getElementById('board').style.display = 'none';
     }
   };
 
   const play = (move) => {
+    if (status !== 'running') return sendMessage(`Start the game first!`);
+
     boardArray[move[0]][move[1]] = player[turn].getSymbol();
     renderBoard();
     if (isWinner()) {
@@ -64,8 +67,14 @@ const gameFactory = () => {
   };
 
   const start = () => {
+    status = 'running';
     player[0] = playerFactory(document.getElementById('player1').value, 'X');
     player[1] = playerFactory(document.getElementById('player2').value, 'O');
+
+    if(!player[0].getName() || !player[1].getName()) {
+      return sendMessage('Both player names must be filled!');
+    }
+
     document.getElementById('start').style.display = 'none';
     document.getElementById('restart').style.display = 'block';
     document.getElementById('board').style.display = 'block';
